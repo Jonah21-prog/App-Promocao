@@ -1,53 +1,44 @@
 package com.engenhariasoftware.apipromocoes.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
-public class Loja implements Serializable {
+public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	private Double valor;
+	private Integer quantidade;
 
 	@ManyToOne
-	@JoinColumn(name = "endereco")
-	private Endereco endereco;
+	@JoinColumn(name = "categoria_id")
+	private Categoria categoria;
 
 	@ManyToOne
 	@JoinColumn(name = "oferta_id")
 	private Oferta oferta;
 
-	@ManyToOne
-	@JoinColumn(name = "cliente_id")
-	private Cliente cliente;
-
-	@OneToMany(mappedBy = "loja")
-	private List<Vendedor> vendedores = new ArrayList<>();
-
-	public Loja() {
+	public Produto() {
 		super();
 	}
 
-	public Loja(Integer id, String nome, Endereco endereco, Oferta oferta, Cliente cliente) {
+	public Produto(Integer id, String nome, Double valor, Integer quantidade, Categoria categoria, Oferta oferta) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.endereco = endereco;
+		this.valor = valor;
+		this.quantidade = quantidade;
+		this.categoria = categoria;
 		this.oferta = oferta;
-		this.cliente = cliente;
 	}
 
 	public Integer getId() {
@@ -66,12 +57,28 @@ public class Loja implements Serializable {
 		this.nome = nome;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
+	public Double getValor() {
+		return valor;
 	}
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 	public Oferta getOferta() {
@@ -80,22 +87,6 @@ public class Loja implements Serializable {
 
 	public void setOferta(Oferta oferta) {
 		this.oferta = oferta;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public List<Vendedor> getVendedores() {
-		return vendedores;
-	}
-
-	public void setVendedores(List<Vendedor> vendedores) {
-		this.vendedores = vendedores;
 	}
 
 	@Override
@@ -111,7 +102,7 @@ public class Loja implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Loja other = (Loja) obj;
+		Produto other = (Produto) obj;
 		return Objects.equals(id, other.id);
 	}
 
