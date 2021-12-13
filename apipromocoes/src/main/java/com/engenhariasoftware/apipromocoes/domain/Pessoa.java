@@ -15,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.engenhariasoftware.apipromocoes.domain.enuns.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -42,6 +44,8 @@ public abstract class Pessoa implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	protected LocalDate dataCriacao = LocalDate.now();
 
+	@ManyToOne
+	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;
 
 	public Pessoa() {
