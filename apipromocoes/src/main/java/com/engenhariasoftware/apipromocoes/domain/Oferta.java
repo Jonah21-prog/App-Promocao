@@ -11,6 +11,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Oferta implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -25,64 +32,5 @@ public class Oferta implements Serializable {
 
 	@OneToMany(mappedBy = "oferta")
 	private List<Loja> lojas = new ArrayList<>();
-
-	public Oferta() {
-		super();
-	}
-
-	public Oferta(Integer id, double precoOferta) {
-		super();
-		this.id = id;
-		this.precoOferta = precoOferta;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public double getPrecoOferta() {
-		return precoOferta;
-	}
-
-	public void setPrecoOferta(double precoOferta) {
-		this.precoOferta = precoOferta;
-	}
-
-	public List<Produto> getProdutos() {
-		return produtos;
-	}
-
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
-	}
-
-	public List<Loja> getLojas() {
-		return lojas;
-	}
-
-	public void setLojas(List<Loja> lojas) {
-		this.lojas = lojas;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Oferta other = (Oferta) obj;
-		return Objects.equals(id, other.id);
-	}
 
 }
