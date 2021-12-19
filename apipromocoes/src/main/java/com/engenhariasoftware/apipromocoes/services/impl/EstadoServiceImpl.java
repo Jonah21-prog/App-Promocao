@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.engenhariasoftware.apipromocoes.domain.Estado;
 import com.engenhariasoftware.apipromocoes.repositories.EstadoRepository;
 import com.engenhariasoftware.apipromocoes.services.EstadoService;
+import com.engenhariasoftware.apipromocoes.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class EstadoServiceImpl implements EstadoService {
@@ -18,7 +19,7 @@ public class EstadoServiceImpl implements EstadoService {
 	@Override
 	public Estado findById(Integer id) {
 		Optional<Estado> obj = repository.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 
 }
