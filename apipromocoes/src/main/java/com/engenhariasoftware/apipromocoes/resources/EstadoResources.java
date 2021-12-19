@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.engenhariasoftware.apipromocoes.domain.Estado;
+import com.engenhariasoftware.apipromocoes.domain.dtos.EstadoDTO;
 import com.engenhariasoftware.apipromocoes.services.EstadoService;
 
 @RestController
@@ -18,8 +19,9 @@ public class EstadoResources {
 	private EstadoService service;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Estado> findById(@PathVariable Integer id) {
-		return ResponseEntity.ok().body(service.findById(id));
+	public ResponseEntity<EstadoDTO> findById(@PathVariable Integer id) {
+		Estado obj = service.findById(id);
+		return ResponseEntity.ok().body(new EstadoDTO(obj));
 	}
 	
 }
