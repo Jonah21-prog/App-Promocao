@@ -1,5 +1,8 @@
 package com.engenhariasoftware.apipromocoes.resources;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +25,13 @@ public class EstadoResources {
 	public ResponseEntity<EstadoDTO> findById(@PathVariable Integer id) {
 		Estado obj = service.findById(id);
 		return ResponseEntity.ok().body(new EstadoDTO(obj));
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<EstadoDTO>> findAll() {
+		List<Estado> list = service.findAll();
+		List<EstadoDTO> listDTO = list.stream().map(obj -> new EstadoDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 }

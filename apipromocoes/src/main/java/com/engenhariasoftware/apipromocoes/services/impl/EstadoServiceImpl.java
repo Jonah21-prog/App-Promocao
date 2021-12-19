@@ -1,5 +1,6 @@
 package com.engenhariasoftware.apipromocoes.services.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ public class EstadoServiceImpl implements EstadoService {
 	public Estado findById(Integer id) {
 		Optional<Estado> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+	}
+	
+	public List<Estado> findAll() {
+		return repository.findAll();
 	}
 
 }
