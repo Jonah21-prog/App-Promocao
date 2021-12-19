@@ -32,9 +32,9 @@ public class EstadoResources {
 	
 	@GetMapping
 	public ResponseEntity<List<EstadoDTO>> findAll() {
-		List<Estado> list = service.findAll();
-		List<EstadoDTO> listDTO = list.stream().map(x -> mapper.map(x, EstadoDTO.class)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDTO);
+		return ResponseEntity.ok()
+				.body(service.findAll()
+						.stream().map(x -> mapper.map(x, EstadoDTO.class)).collect(Collectors.toList()));
 	}
 	
 }
