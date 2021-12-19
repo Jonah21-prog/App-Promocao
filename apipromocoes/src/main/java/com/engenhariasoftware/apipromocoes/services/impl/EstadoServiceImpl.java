@@ -3,6 +3,7 @@ package com.engenhariasoftware.apipromocoes.services.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class EstadoServiceImpl implements EstadoService {
 	@Autowired
 	private EstadoRepository repository;
 
+	@Autowired
+	private ModelMapper mapper;
+	
 	@Override
 	public Estado findById(Integer id) {
 		Optional<Estado> obj = repository.findById(id);
@@ -31,8 +35,7 @@ public class EstadoServiceImpl implements EstadoService {
 
 	@Override
 	public Estado create(EstadoDTO obj) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.save(mapper.map(obj, Estado.class));
 	}
 
 }
