@@ -11,6 +11,7 @@ import com.engenhariasoftware.apipromocoes.domain.Estado;
 import com.engenhariasoftware.apipromocoes.domain.dtos.EstadoDTO;
 import com.engenhariasoftware.apipromocoes.repositories.EstadoRepository;
 import com.engenhariasoftware.apipromocoes.services.EstadoService;
+import com.engenhariasoftware.apipromocoes.services.exceptions.DataIntegratyViolationException;
 import com.engenhariasoftware.apipromocoes.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -21,7 +22,7 @@ public class EstadoServiceImpl implements EstadoService {
 
 	@Autowired
 	private ModelMapper mapper;
-	
+
 	@Override
 	public Estado findById(Integer id) {
 		Optional<Estado> obj = repository.findById(id);
@@ -35,7 +36,15 @@ public class EstadoServiceImpl implements EstadoService {
 
 	@Override
 	public Estado create(EstadoDTO obj) {
+		findByNome(obj);
 		return repository.save(mapper.map(obj, Estado.class));
 	}
 
+	private void findByNome(EstadoDTO obj) {
+		Optional<Estado> estado = repository.findByNome(obj.getNome());
+		if(estado.isPresent()) {
+			throw new DataIntegratyViolationException("Estado já cadastrado no sistema");
+		}
+	}
+	
 }
