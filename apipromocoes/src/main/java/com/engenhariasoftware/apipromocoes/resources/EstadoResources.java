@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,13 +25,15 @@ import com.engenhariasoftware.apipromocoes.services.EstadoService;
 @RequestMapping(value = "/estados")
 public class EstadoResources {
 
+	private static final String ID = "/{id}";
+
 	@Autowired
 	private ModelMapper mapper;
 	
 	@Autowired
 	private EstadoService service;
 	
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = ID)
 	public ResponseEntity<EstadoDTO> findById(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(mapper.map(service.findById(id), EstadoDTO.class));
 	}
@@ -45,15 +48,21 @@ public class EstadoResources {
 	@PostMapping
 	public ResponseEntity<EstadoDTO> create(@RequestBody EstadoDTO obj) {
 		URI uri = ServletUriComponentsBuilder
-				.fromCurrentRequest().path("/{id}").buildAndExpand(service.create(obj).getId()).toUri();
+				.fromCurrentRequest().path(ID).buildAndExpand(service.create(obj).getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@PutMapping(value = "/{id}")
+	@PutMapping(value = ID)
 	public ResponseEntity<EstadoDTO> update(@PathVariable Integer id, @RequestBody EstadoDTO obj) {
 		obj.setId(id);
 		Estado newObj = service.update(obj);
 		return ResponseEntity.ok().body(mapper.map(newObj, EstadoDTO.class));	
+	}
+	
+	@DeleteMapping(value = ID)
+	public ResponseEntity<EstadoDTO> delete(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 }

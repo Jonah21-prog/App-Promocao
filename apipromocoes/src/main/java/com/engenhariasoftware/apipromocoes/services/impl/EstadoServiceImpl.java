@@ -45,6 +45,11 @@ public class EstadoServiceImpl implements EstadoService {
 		return repository.save(mapper.map(obj, Estado.class));
 	}
 
+	@Override
+	public void delete(Integer id) {
+		repository.deleteById(id);
+	}
+	
 	private void findByNome(EstadoDTO obj) {
 		Optional<Estado> estado = repository.findByNome(obj.getNome());
 		if (estado.isPresent()) {

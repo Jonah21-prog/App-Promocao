@@ -11,5 +11,6 @@ public interface EstadoService {
 	List<Estado> findAll();
 	Estado create(EstadoDTO obj); 
 	Estado update(EstadoDTO obj);
+	void delete(Integer id);   
 	
 }
