@@ -2,19 +2,19 @@ package com.engenhariasoftware.apipromocoes.domain.dtos;
 
 import java.io.Serializable;
 
-import com.engenhariasoftware.apipromocoes.domain.Estado;
+import com.engenhariasoftware.apipromocoes.domain.Cidade;
 
-public class EstadoDTO implements Serializable {
+public class CidadeDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 	private String nome;
 
-	public EstadoDTO() {
+	public CidadeDTO() {
 		super();
 	}
 
-	public EstadoDTO(Estado obj) {
+	public CidadeDTO(Cidade obj) {
 		super();
 		this.id = obj.getId();
 		this.nome = obj.getNome();
