@@ -40,11 +40,16 @@ public class EstadoServiceImpl implements EstadoService {
 		return repository.save(mapper.map(obj, Estado.class));
 	}
 
+	@Override
+	public Estado update(EstadoDTO obj) {
+		return repository.save(mapper.map(obj, Estado.class));
+	}
+
 	private void findByNome(EstadoDTO obj) {
 		Optional<Estado> estado = repository.findByNome(obj.getNome());
-		if(estado.isPresent()) {
+		if (estado.isPresent()) {
 			throw new DataIntegratyViolationException("Estado já cadastrado no sistema");
 		}
 	}
-	
+
 }

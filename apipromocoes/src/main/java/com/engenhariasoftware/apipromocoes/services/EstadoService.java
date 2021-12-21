@@ -10,5 +10,6 @@ public interface EstadoService {
 	Estado findById(Integer id);
 	List<Estado> findAll();
 	Estado create(EstadoDTO obj); 
+	Estado update(EstadoDTO obj);
 	
 }
