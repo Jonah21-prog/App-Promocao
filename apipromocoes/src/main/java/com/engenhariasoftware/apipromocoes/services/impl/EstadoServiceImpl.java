@@ -3,6 +3,8 @@ package com.engenhariasoftware.apipromocoes.services.impl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,13 +37,13 @@ public class EstadoServiceImpl implements EstadoService {
 	}
 
 	@Override
-	public Estado create(EstadoDTO obj) {
+	public Estado create(@Valid EstadoDTO obj) {
 		findByNome(obj);
 		return repository.save(mapper.map(obj, Estado.class));
 	}
 
 	@Override
-	public Estado update(EstadoDTO obj) {
+	public Estado update(@Valid EstadoDTO obj) {
 		return repository.save(mapper.map(obj, Estado.class));
 	}
 
