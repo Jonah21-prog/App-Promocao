@@ -7,9 +7,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.engenhariasoftware.apipromocoes.domain.Categoria;
 import com.engenhariasoftware.apipromocoes.domain.Cidade;
 import com.engenhariasoftware.apipromocoes.domain.Endereco;
 import com.engenhariasoftware.apipromocoes.domain.Estado;
+import com.engenhariasoftware.apipromocoes.repositories.CategoriaRepository;
 import com.engenhariasoftware.apipromocoes.repositories.CidadeRepository;
 import com.engenhariasoftware.apipromocoes.repositories.EnderecoRepository;
 import com.engenhariasoftware.apipromocoes.repositories.EstadoRepository;
@@ -27,6 +29,9 @@ public class LocalConfig {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	
+	@Autowired
+	private CategoriaRepository categoriaRepository;
+	
 	@Bean
 	public void startDB() {
 		Estado e1 = new Estado(null, "Pernambuco");
@@ -41,6 +46,10 @@ public class LocalConfig {
 		Endereco end1 = new Endereco(null, "Rua São Jorge", "23", "Casa", "Magano", "55294-560", c1);
 		Endereco end2 = new Endereco(null, "Travessa Baixa Fria", "67", "Ap1", "Palmeira de Fora", "57608-380", c2);
 		enderecoRepository.saveAll(List.of(end1, end2));
+
+		Categoria cat1 = new Categoria(null, "Frios");
+		Categoria cat2 = new Categoria(null, "Bebidas");
+		categoriaRepository.saveAll(List.of(cat1, cat2));
 		
 	}
 	
