@@ -2,8 +2,9 @@ package com.engenhariasoftware.apipromocoes.domain.enuns;
 
 public enum Perfil {
 
-	CLIENTE(0, "ROLE_CLIENTE"), 
-	VENDEDOR(1, "ROLE_VENDEDOR");
+	ADMIN(0, "ROLE_ADMIN"),
+	CLIENTE(1, "ROLE_CLIENTE"), 
+	VENDEDOR(2, "ROLE_VENDEDOR");
 
 	private Integer codigo;
 	private String descricao;

@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,48 +18,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.engenhariasoftware.apipromocoes.domain.Categoria;
-import com.engenhariasoftware.apipromocoes.domain.dtos.CategoriaDTO;
-import com.engenhariasoftware.apipromocoes.services.CategoriaService;
+import com.engenhariasoftware.apipromocoes.domain.Cliente;
+import com.engenhariasoftware.apipromocoes.domain.dtos.ClienteDTO;
+import com.engenhariasoftware.apipromocoes.services.ClienteService;
 
 @RestController
-@RequestMapping(value = "/categorias")
-public class CategoriaResources {
+@RequestMapping(value = "/clientes")
+public class ClienteResources {
 
 	private static final String ID = "/{id}";
 	
 	@Autowired
-	private CategoriaService service;
+	private ClienteService service;
 	
 	@GetMapping(value = ID)
-	public ResponseEntity<CategoriaDTO> findById(@PathVariable Integer id) {
-		Categoria obj = service.findById(id);
-		return ResponseEntity.ok().body(new CategoriaDTO(obj));
+	public ResponseEntity<ClienteDTO> findById(@PathVariable Integer id) {
+		Cliente obj = service.findById(id);
+		return ResponseEntity.ok().body(new ClienteDTO(obj));
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<CategoriaDTO>> findAll() {
-		List<Categoria> list = service.findAll();
-		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+	public ResponseEntity<List<ClienteDTO>> findAll() {
+		List<Cliente> list = service.findAll();
+		List<ClienteDTO> listDTO = list.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
-
+	
 	@PostMapping
-	public ResponseEntity<CategoriaDTO> create(@RequestBody CategoriaDTO objDTO) {
-		Categoria obj = service.create(objDTO);
+	public ResponseEntity<ClienteDTO> create(@RequestBody ClienteDTO objDTO) {
+		Cliente obj = service.create(objDTO);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest().path(ID).buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = ID)
-	public ResponseEntity<CategoriaDTO> update(@PathVariable Integer id, @RequestBody CategoriaDTO objDTO) {
-		Categoria newObj = service.update(id, objDTO);
-		return ResponseEntity.ok().body(new CategoriaDTO(newObj));	
+	public ResponseEntity<ClienteDTO> update(@PathVariable Integer id, @Valid @RequestBody ClienteDTO objDTO) {
+		Cliente newObj = service.update(id, objDTO);
+		return ResponseEntity.ok().body(new ClienteDTO(newObj));
 	}
 	
 	@DeleteMapping(value = ID)
-	public ResponseEntity<CategoriaDTO> delete(@PathVariable Integer id) {
+	public ResponseEntity<ClienteDTO> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}

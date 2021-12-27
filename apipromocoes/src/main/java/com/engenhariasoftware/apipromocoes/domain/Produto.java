@@ -1,6 +1,8 @@
 package com.engenhariasoftware.apipromocoes.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -8,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -22,24 +26,33 @@ public class Produto implements Serializable {
 	private Integer quantidade;
 
 	@ManyToOne
-	@JoinColumn(name = "categoria_id")
-	private Categoria categoria;
-
-	@ManyToOne
 	@JoinColumn(name = "oferta_id")
 	private Oferta oferta;
+
+	@ManyToMany
+	@JoinTable(name = "PRODUTO_CATEGORIA", 
+		joinColumns = @JoinColumn(name = "produto_id"), 
+		inverseJoinColumns = @JoinColumn(name = "categoria_id")
+	)
+	private List<Categoria> categorias = new ArrayList<>();
+
+	@ManyToMany
+	@JoinTable(name = "PRODUTO_LOJA", 
+		joinColumns = @JoinColumn(name = "produto_id"), 
+		inverseJoinColumns = @JoinColumn(name = "loja_id")
+	)
+	private List<Loja> lojas = new ArrayList<>();
 
 	public Produto() {
 		super();
 	}
 
-	public Produto(Integer id, String nome, Double valor, Integer quantidade, Categoria categoria, Oferta oferta) {
+	public Produto(Integer id, String nome, Double valor, Integer quantidade, Oferta oferta) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.valor = valor;
 		this.quantidade = quantidade;
-		this.categoria = categoria;
 		this.oferta = oferta;
 	}
 
@@ -75,14 +88,6 @@ public class Produto implements Serializable {
 		this.quantidade = quantidade;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-
 	public Oferta getOferta() {
 		return oferta;
 	}
@@ -91,9 +96,20 @@ public class Produto implements Serializable {
 		this.oferta = oferta;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
+	public List<Loja> getLojas() {
+		return lojas;
+	}
+
+	public void setLojas(List<Loja> lojas) {
+		this.lojas = lojas;
 	}
 
 	@Override

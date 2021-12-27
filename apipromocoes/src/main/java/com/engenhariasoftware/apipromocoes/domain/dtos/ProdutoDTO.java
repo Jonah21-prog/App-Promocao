@@ -20,11 +20,6 @@ public class ProdutoDTO implements Serializable {
 	@NotNull(message = "O campo QUANTIDADE é requerido")
 	private Integer quantidade;
 
-	@NotNull(message = "O campo CATEGORIA é requerido")
-	private Integer categoria;
-
-	private String nomeCategoria;
-
 	@NotNull(message = "O campo OFERTA é requerido")
 	private Integer oferta;
 
@@ -40,8 +35,6 @@ public class ProdutoDTO implements Serializable {
 		this.nome = obj.getNome();
 		this.valor = obj.getValor();
 		this.quantidade = obj.getQuantidade();
-		this.categoria = obj.getCategoria().getId();
-		this.nomeCategoria = obj.getCategoria().getNome();
 		this.oferta = obj.getOferta().getId();
 		this.nomeOferta = obj.getOferta().getNome();
 	}
@@ -76,22 +69,6 @@ public class ProdutoDTO implements Serializable {
 
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
-	}
-
-	public Integer getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Integer categoria) {
-		this.categoria = categoria;
-	}
-
-	public String getNomeCategoria() {
-		return nomeCategoria;
-	}
-
-	public void setNomeCategoria(String nomeCategoria) {
-		this.nomeCategoria = nomeCategoria;
 	}
 
 	public Integer getOferta() {

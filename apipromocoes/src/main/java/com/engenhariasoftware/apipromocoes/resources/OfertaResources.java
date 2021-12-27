@@ -16,48 +16,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.engenhariasoftware.apipromocoes.domain.Categoria;
-import com.engenhariasoftware.apipromocoes.domain.dtos.CategoriaDTO;
-import com.engenhariasoftware.apipromocoes.services.CategoriaService;
+import com.engenhariasoftware.apipromocoes.domain.Oferta;
+import com.engenhariasoftware.apipromocoes.domain.dtos.OfertaDTO;
+import com.engenhariasoftware.apipromocoes.services.OfertaService;
 
 @RestController
-@RequestMapping(value = "/categorias")
-public class CategoriaResources {
+@RequestMapping(value = "/ofertas")
+public class OfertaResources {
 
 	private static final String ID = "/{id}";
 	
 	@Autowired
-	private CategoriaService service;
+	private OfertaService service;
 	
 	@GetMapping(value = ID)
-	public ResponseEntity<CategoriaDTO> findById(@PathVariable Integer id) {
-		Categoria obj = service.findById(id);
-		return ResponseEntity.ok().body(new CategoriaDTO(obj));
+	public ResponseEntity<OfertaDTO> findById(@PathVariable Integer id) {
+		Oferta obj = service.findById(id);
+		return ResponseEntity.ok().body(new OfertaDTO(obj));
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<CategoriaDTO>> findAll() {
-		List<Categoria> list = service.findAll();
-		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+	public ResponseEntity<List<OfertaDTO>> findAll() {
+		List<Oferta> list = service.findAll();
+		List<OfertaDTO> listDTO = list.stream().map(obj -> new OfertaDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 
 	@PostMapping
-	public ResponseEntity<CategoriaDTO> create(@RequestBody CategoriaDTO objDTO) {
-		Categoria obj = service.create(objDTO);
+	public ResponseEntity<OfertaDTO> create(@RequestBody OfertaDTO objDTO) {
+		Oferta obj = service.create(objDTO);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest().path(ID).buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = ID)
-	public ResponseEntity<CategoriaDTO> update(@PathVariable Integer id, @RequestBody CategoriaDTO objDTO) {
-		Categoria newObj = service.update(id, objDTO);
-		return ResponseEntity.ok().body(new CategoriaDTO(newObj));	
+	public ResponseEntity<OfertaDTO> update(@PathVariable Integer id, @RequestBody OfertaDTO objDTO) {
+		Oferta newObj = service.update(id, objDTO);
+		return ResponseEntity.ok().body(new OfertaDTO(newObj));	
 	}
 	
 	@DeleteMapping(value = ID)
-	public ResponseEntity<CategoriaDTO> delete(@PathVariable Integer id) {
+	public ResponseEntity<OfertaDTO> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}

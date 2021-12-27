@@ -53,18 +53,18 @@ public class CategoriaServiceImpl implements CategoriaService {
 	}
 
 	private Categoria newCategoria(CategoriaDTO obj) {
-		Categoria cat = new Categoria(); 
-		if(obj.getId() != null) {
-			cat.setId(obj.getId());
-		}
 		
-		cat.setNome(obj.getNome());
-		return cat;
+		Categoria categoria = new Categoria();
+		if(obj.getId() != null) {
+			categoria.setId(obj.getId());
+		}
+		categoria.setNome(obj.getNome());
+		return categoria;
 	}
 
 	private void validarNomeCategoria(CategoriaDTO objDTO) {
-		Optional<Categoria> cat = repository.findByNome(objDTO.getNome());
-		if (cat.isPresent()) {
+		Optional<Categoria> categoria = repository.findByNome(objDTO.getNome());
+		if (categoria.isPresent()) {
 			throw new DataIntegratyViolationException("Categoria já cadastrado no sistema");
 		}
 	}
