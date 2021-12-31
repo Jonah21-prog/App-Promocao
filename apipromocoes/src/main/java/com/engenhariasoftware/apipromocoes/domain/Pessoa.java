@@ -18,6 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.engenhariasoftware.apipromocoes.domain.enuns.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -31,6 +33,7 @@ public abstract class Pessoa implements Serializable {
 	protected String nome;
 
 	@Column(unique = true)
+	@CPF
 	protected String cpf;
 	
 	@Column(unique = true)

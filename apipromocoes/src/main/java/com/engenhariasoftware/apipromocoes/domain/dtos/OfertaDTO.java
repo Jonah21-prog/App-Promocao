@@ -15,7 +15,7 @@ public class OfertaDTO implements Serializable {
 	private String nome;
 
 	@NotNull(message = "O campo PREÇO DA OFERTA é requerido")
-	private double precoOferta;
+	private Double precoOferta;
 
 	public OfertaDTO() {
 		super();
@@ -44,11 +44,11 @@ public class OfertaDTO implements Serializable {
 		this.nome = nome;
 	}
 
-	public double getPrecoOferta() {
+	public Double getPrecoOferta() {
 		return precoOferta;
 	}
 
-	public void setPrecoOferta(double precoOferta) {
+	public void setPrecoOferta(Double precoOferta) {
 		this.precoOferta = precoOferta;
 	}
 

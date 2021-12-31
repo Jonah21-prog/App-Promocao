@@ -21,8 +21,8 @@ public class Oferta implements Serializable {
 
 	private String nome;
 
-	private double precoOferta;
-	
+	private Double precoOferta;
+
 	@OneToMany(mappedBy = "oferta")
 	private List<Produto> produtos = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class Oferta implements Serializable {
 		super();
 	}
 
-	public Oferta(Integer id, String nome, double precoOferta) {
+	public Oferta(Integer id, String nome, Double precoOferta) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -56,11 +56,11 @@ public class Oferta implements Serializable {
 		this.nome = nome;
 	}
 
-	public double getPrecoOferta() {
+	public Double getPrecoOferta() {
 		return precoOferta;
 	}
 
-	public void setPrecoOferta(double precoOferta) {
+	public void setPrecoOferta(Double precoOferta) {
 		this.precoOferta = precoOferta;
 	}
 

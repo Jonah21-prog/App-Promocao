@@ -18,6 +18,7 @@ import com.engenhariasoftware.apipromocoes.services.ClienteService;
 import com.engenhariasoftware.apipromocoes.services.EnderecoService;
 import com.engenhariasoftware.apipromocoes.services.LojaService;
 import com.engenhariasoftware.apipromocoes.services.OfertaService;
+import com.engenhariasoftware.apipromocoes.services.exceptions.DataIntegratyViolationException;
 import com.engenhariasoftware.apipromocoes.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -28,13 +29,13 @@ public class LojaServiceImpl implements LojaService {
 
 	@Autowired
 	private EnderecoService enderecoService;
-	
+
 	@Autowired
 	private OfertaService ofertaService;
 
 	@Autowired
 	private ClienteService clienteService;
-	
+
 	@Override
 	public Loja findById(Integer id) {
 		Optional<Loja> obj = repository.findById(id);
@@ -48,6 +49,7 @@ public class LojaServiceImpl implements LojaService {
 
 	@Override
 	public Loja create(@Valid LojaDTO objDTO) {
+		validarPorCnpj(objDTO);
 		return repository.save(newLoja(objDTO));
 	}
 
@@ -58,7 +60,7 @@ public class LojaServiceImpl implements LojaService {
 		oldObj = newLoja(objDTO);
 		return repository.save(oldObj);
 	}
-	
+
 	@Override
 	public void delete(Integer id) {
 		repository.deleteById(id);
@@ -68,9 +70,9 @@ public class LojaServiceImpl implements LojaService {
 		Endereco endereco = enderecoService.findById(obj.getEndereco());
 		Oferta oferta = ofertaService.findById(obj.getOferta());
 		Cliente cliente = clienteService.findById(obj.getCliente());
-		
+
 		Loja loja = new Loja();
-		if(obj.getId() != null) {
+		if (obj.getId() != null) {
 			loja.setId(obj.getId());
 		}
 
@@ -78,7 +80,17 @@ public class LojaServiceImpl implements LojaService {
 		loja.setEndereco(endereco);
 		loja.setOferta(oferta);
 		loja.setNome(obj.getNome());
+		loja.setCnpj(obj.getCnpj());
+		loja.setTelefone(obj.getTelefone());
 		return loja;
 	}
-	
+
+	private void validarPorCnpj(@Valid LojaDTO objDTO) {
+		Optional<Loja> obj = repository.findByCnpj(objDTO.getCnpj());
+		if (obj.isPresent() && obj.get().getId() != objDTO.getId()) {
+			throw new DataIntegratyViolationException("CNPJ já cadastrado no sistema!");
+		}
+
+	}
+
 }

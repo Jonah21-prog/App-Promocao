@@ -8,11 +8,11 @@ import java.util.stream.Collectors;
 
 import org.hibernate.validator.constraints.br.CPF;
 
-import com.engenhariasoftware.apipromocoes.domain.Cliente;
+import com.engenhariasoftware.apipromocoes.domain.Vendedor;
 import com.engenhariasoftware.apipromocoes.domain.enuns.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class ClienteDTO implements Serializable {
+public class VendedorDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	protected Integer id;
@@ -28,12 +28,12 @@ public class ClienteDTO implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	protected LocalDate dataCriacao = LocalDate.now();
 
-	public ClienteDTO() {
+	public VendedorDTO() {
 		super();
-		addPerfil(Perfil.CLIENTE);
+		addPerfil(Perfil.VENDEDOR);
 	}
 
-	public ClienteDTO(Cliente obj) {
+	public VendedorDTO(Vendedor obj) {
 		super();
 		this.id = obj.getId();
 		this.nome = obj.getNome();
@@ -43,7 +43,7 @@ public class ClienteDTO implements Serializable {
 		this.perfis = obj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
 		this.dataCriacao = obj.getDataCriacao();
 		this.endereco = obj.getEndereco().getId();
-		addPerfil(Perfil.CLIENTE);
+		addPerfil(Perfil.VENDEDOR);
 	}
 
 	public Integer getId() {

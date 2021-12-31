@@ -59,6 +59,7 @@ public class OfertaServiceImpl implements OfertaService {
 		}
 		
 		cat.setNome(obj.getNome());
+		cat.setPrecoOferta(obj.getPrecoOferta());
 		return cat;
 	}
 

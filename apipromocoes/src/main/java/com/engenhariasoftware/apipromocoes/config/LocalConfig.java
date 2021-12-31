@@ -16,6 +16,8 @@ import com.engenhariasoftware.apipromocoes.domain.Estado;
 import com.engenhariasoftware.apipromocoes.domain.Loja;
 import com.engenhariasoftware.apipromocoes.domain.Oferta;
 import com.engenhariasoftware.apipromocoes.domain.Produto;
+import com.engenhariasoftware.apipromocoes.domain.Vendedor;
+import com.engenhariasoftware.apipromocoes.domain.enuns.Perfil;
 import com.engenhariasoftware.apipromocoes.repositories.CategoriaRepository;
 import com.engenhariasoftware.apipromocoes.repositories.CidadeRepository;
 import com.engenhariasoftware.apipromocoes.repositories.ClienteRepository;
@@ -24,6 +26,7 @@ import com.engenhariasoftware.apipromocoes.repositories.EstadoRepository;
 import com.engenhariasoftware.apipromocoes.repositories.LojaRepository;
 import com.engenhariasoftware.apipromocoes.repositories.OfertaRepository;
 import com.engenhariasoftware.apipromocoes.repositories.ProdutoRepository;
+import com.engenhariasoftware.apipromocoes.repositories.VendedorRepository;
 
 @Configuration
 @Profile("local")
@@ -52,6 +55,9 @@ public class LocalConfig {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private VendedorRepository vendedorRepository;
 	
 	@Bean
 	public void startDB() {
@@ -81,10 +87,16 @@ public class LocalConfig {
 		produtoRepository.saveAll(List.of(p1, p2));
 
 		Cliente cli1 = new Cliente(null, "João", "709.846.000-19", "joa@gamil.com", "123", end2);
+		cli1.addPerfil(Perfil.CLIENTE);
 		clienteRepository.saveAll(Arrays.asList(cli1));
+
+		Vendedor v1 = new Vendedor(null, "Maria", "842.747.810-03", "maria@gmail.com", "1234", end2);
+		v1.addPerfil(Perfil.VENDEDOR);
+		vendedorRepository.saveAll(Arrays.asList(v1));
+
 		
-		Loja l1 = new Loja(null, "Insinuate", end2, of1, cli1);
-		Loja l2 = new Loja(null, "Americanas", end1, of1, cli1);
+		Loja l1 = new Loja(null, "Insinuante", "34.716.839/0001-42", "8799999999", end2, of2, cli1);
+		Loja l2 = new Loja(null, "Americanas", "54.459.131/0001-60", "98868686", end2, of2, cli1);
 		lojaRepository.saveAll(List.of(l1,l2));
 		
 		l1.getProdutos().addAll(Arrays.asList(p1));

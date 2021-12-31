@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+
 @Entity
 public class Loja implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,6 +24,11 @@ public class Loja implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+
+	@CNPJ
+	private String cnpj;
+
+	private String telefone;
 
 	@ManyToOne
 	@JoinColumn(name = "endereco")
@@ -45,10 +52,13 @@ public class Loja implements Serializable {
 		super();
 	}
 
-	public Loja(Integer id, String nome, Endereco endereco, Oferta oferta, Cliente cliente) {
+	public Loja(Integer id, String nome, String cnpj, String telefone, Endereco endereco, Oferta oferta,
+			Cliente cliente) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.cnpj = cnpj;
+		this.telefone = telefone;
 		this.endereco = endereco;
 		this.oferta = oferta;
 		this.cliente = cliente;
@@ -68,6 +78,22 @@ public class Loja implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public Endereco getEndereco() {
