@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.engenhariasoftware.apipromocoes.domain.Cliente;
@@ -25,6 +26,9 @@ public class ClienteServiceImpl implements ClienteService {
 	@Autowired
 	private EnderecoService enderecoService;
 
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+
 	@Override
 	public Cliente findById(Integer id) {
 		Optional<Cliente> obj = repository.findById(id);
@@ -38,6 +42,7 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public Cliente create(ClienteDTO objDTO) {
+		objDTO.setSenha(encoder.encode(objDTO.getSenha()));
 		return repository.save(newCliente(objDTO));
 	}
 
@@ -53,15 +58,15 @@ public class ClienteServiceImpl implements ClienteService {
 	public void delete(Integer id) {
 		repository.deleteById(id);
 	}
-	
+
 	private Cliente newCliente(ClienteDTO obj) {
 		Endereco endereco = enderecoService.findById(obj.getEndereco());
-		
+
 		Cliente cliente = new Cliente();
-		if(obj.getId() != null) {
+		if (obj.getId() != null) {
 			cliente.setId(obj.getId());
 		}
-		
+
 		cliente.setEndereco(endereco);
 		cliente.setNome(obj.getNome());
 		cliente.setCpf(obj.getCpf());

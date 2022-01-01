@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.engenhariasoftware.apipromocoes.domain.Endereco;
@@ -27,9 +28,12 @@ public class VendedorServiceImpl implements VendedorService {
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
-	
+
 	@Autowired
 	private EnderecoService enderecoService;
+
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 
 	@Override
 	public Vendedor findById(Integer id) {
@@ -44,6 +48,7 @@ public class VendedorServiceImpl implements VendedorService {
 
 	@Override
 	public Vendedor create(VendedorDTO objDTO) {
+		objDTO.setSenha(encoder.encode(objDTO.getSenha()));
 		validaPorCpfEEmail(objDTO);
 		return repository.save(newVendedor(objDTO));
 	}
@@ -80,12 +85,12 @@ public class VendedorServiceImpl implements VendedorService {
 
 	private void validaPorCpfEEmail(VendedorDTO objDTO) {
 		Optional<Pessoa> obj = pessoaRepository.findByCpf(objDTO.getCpf());
-		if(obj.isPresent() && obj.get().getId() != objDTO.getId()) {
+		if (obj.isPresent() && obj.get().getId() != objDTO.getId()) {
 			throw new DataIntegratyViolationException("CPF já cadastrado no sistema!");
 		}
-		
+
 		obj = pessoaRepository.findByEmail(objDTO.getEmail());
-		if(obj.isPresent() && obj.get().getId() != objDTO.getId()) {
+		if (obj.isPresent() && obj.get().getId() != objDTO.getId()) {
 			throw new DataIntegratyViolationException("E-mail já cadastrado no sistema!");
 		}
 	}

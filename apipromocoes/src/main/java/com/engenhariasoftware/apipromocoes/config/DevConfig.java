@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.engenhariasoftware.apipromocoes.domain.Categoria;
 import com.engenhariasoftware.apipromocoes.domain.Cidade;
@@ -32,6 +33,9 @@ import com.engenhariasoftware.apipromocoes.repositories.VendedorRepository;
 @Profile("dev")
 public class DevConfig {
 
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
 	@Autowired
 	private EstadoRepository repository;
 	
@@ -86,11 +90,11 @@ public class DevConfig {
 		Produto p2 = new Produto(null, "Caixas Red Bull", 189.00, 100, of2);
 		produtoRepository.saveAll(List.of(p1, p2));
 
-		Cliente cli1 = new Cliente(null, "João", "709.846.000-19", "joa@gamil.com", "123", end2);
+		Cliente cli1 = new Cliente(null, "João", "709.846.000-19", "joa@gamil.com", encoder.encode("123"), end2);
 		cli1.addPerfil(Perfil.CLIENTE);
 		clienteRepository.saveAll(Arrays.asList(cli1));
 
-		Vendedor v1 = new Vendedor(null, "Maria", "842.747.810-03", "maria@gmail.com", "1234", end2);
+		Vendedor v1 = new Vendedor(null, "Maria", "842.747.810-03", "maria@gmail.com", encoder.encode("1234"), end2);
 		v1.addPerfil(Perfil.VENDEDOR);
 		vendedorRepository.saveAll(Arrays.asList(v1));
 
