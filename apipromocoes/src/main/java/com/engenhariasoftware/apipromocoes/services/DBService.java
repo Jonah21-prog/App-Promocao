@@ -92,7 +92,7 @@ public class DBService {
 		clienteRepository.saveAll(Arrays.asList(cli1));
 
 		Vendedor v1 = new Vendedor(null, "Maria", "842.747.810-03", "maria@gmail.com", encoder.encode("1234"), end2);
-		v1.addPerfil(Perfil.VENDEDOR);
+		v1.addPerfil(Perfil.ADMIN);
 		vendedorRepository.saveAll(Arrays.asList(v1));
 
 		Loja l1 = new Loja(null, "Insinuante", "34.716.839/0001-42", "8799999999", end2, of2, cli1);

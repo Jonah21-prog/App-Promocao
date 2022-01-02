@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public abstract class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
@@ -35,7 +35,7 @@ public abstract class Pessoa implements Serializable {
 	@Column(unique = true)
 	@CPF
 	protected String cpf;
-	
+
 	@Column(unique = true)
 	protected String email;
 	protected String senha;
@@ -43,13 +43,13 @@ public abstract class Pessoa implements Serializable {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "PERFIS")
 	protected Set<Integer> perfis = new HashSet<>();
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	protected LocalDate dataCriacao = LocalDate.now();
 
 	@ManyToOne
 	@JoinColumn(name = "endereco_id")
-	protected Endereco endereco;
+	private Endereco endereco;
 
 	public Pessoa() {
 		super();

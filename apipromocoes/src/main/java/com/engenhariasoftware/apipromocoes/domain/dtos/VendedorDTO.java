@@ -30,7 +30,7 @@ public class VendedorDTO implements Serializable {
 
 	public VendedorDTO() {
 		super();
-		addPerfil(Perfil.VENDEDOR);
+		addPerfil(Perfil.CLIENTE);
 	}
 
 	public VendedorDTO(Vendedor obj) {
@@ -43,7 +43,7 @@ public class VendedorDTO implements Serializable {
 		this.perfis = obj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
 		this.dataCriacao = obj.getDataCriacao();
 		this.endereco = obj.getEndereco().getId();
-		addPerfil(Perfil.VENDEDOR);
+		addPerfil(Perfil.CLIENTE);
 	}
 
 	public Integer getId() {

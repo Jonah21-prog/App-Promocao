@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,20 +45,23 @@ public class VendedorResources {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<VendedorDTO> create(@RequestBody VendedorDTO objDTO) {
 		Vendedor obj = service.create(objDTO);
 		URI uri = ServletUriComponentsBuilder
-				.fromCurrentRequest().path(ID).buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+				.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(null).build();
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value = ID)
 	public ResponseEntity<VendedorDTO> update(@PathVariable Integer id, @Valid @RequestBody VendedorDTO objDTO) {
 		Vendedor newObj = service.update(id, objDTO);
 		return ResponseEntity.ok().body(new VendedorDTO(newObj));
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping(value = ID)
 	public ResponseEntity<VendedorDTO> delete(@PathVariable Integer id) {
 		service.delete(id);
