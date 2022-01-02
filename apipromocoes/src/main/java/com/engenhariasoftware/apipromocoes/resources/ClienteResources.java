@@ -30,13 +30,13 @@ public class ClienteResources {
 	
 	@Autowired
 	private ClienteService service;
-	
+
 	@GetMapping(value = ID)
 	public ResponseEntity<ClienteDTO> findById(@PathVariable Integer id) {
 		Cliente obj = service.findById(id);
 		return ResponseEntity.ok().body(new ClienteDTO(obj));
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<List<ClienteDTO>> findAll() {
 		List<Cliente> list = service.findAll();
